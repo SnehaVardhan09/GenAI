@@ -7,3 +7,9 @@ vector database uses specialized data structure to approx search of nearest neig
 
 vector quantization
 Product quantization - Scalar quantization - Binary quantization
+
+
+
+
+
+errors:
