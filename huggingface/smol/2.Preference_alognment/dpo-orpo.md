@@ -11,32 +11,32 @@ Alternate approaches like ORPO combine instruction tuning and preference alignme
 
 
 # 1. Direct Preference Optimization (DPO)
-DPO offers simplified approach to aligning language models with human preferences. 
-Unlike traditional RLHF methods that requires separate reward models and complex RL, DPO directly optimizes using the model using preference data.
+* DPO offers simplified approach to aligning language models with human preferences. 
+* Unlike traditional RLHF methods that requires separate reward models and complex RL, DPO directly optimizes using the model using preference data.
 
 ### Understanding DPO
-DPO recasts preference alignment as classification problem on human preference data.
+* DPO recasts preference alignment as classification problem on human preference data.
 
-Traditional RLHF approaches require training Reward model + complex RL algos like PPO to align model outputs.
+* Traditional RLHF approaches require training Reward model + complex RL algos like PPO to align model outputs.
 `DPO` simplifies this process by `defining a loss function` that `optimizes the model's policy based on preferred vs non preferred` outputs.
 
-Used to train models like LLama
+* Used to train models like LLama
 
 ### How DPO works
-DPO proces requires SFT to adapt the model to the target domain.
-This creates a foundation for preference learning by training on standard instruction-following datasets.
-The model learns basic tasks completion while maintaining its general capabilities.
+* DPO proces requires SFT to adapt the model to the target domain.
+* This creates a foundation for preference learning by training on standard instruction-following datasets.
+* The model learns basic tasks completion while maintaining its general capabilities.
 
 Next Preference Learning, 
-model is trained on pair of outputs - one preferred and one non-preferred.
-The prefered pair help the model understand which responses better align with human values and expectations.
+* model is trained on pair of outputs - one preferred and one non-preferred.
+* The prefered pair help the model understand which responses better align with human values and expectations.
 
-The core innovation of DPO lies in the direct optimization approach. 
-Rather than training a separate reward model, DPO uses a` binary cross-entropy loss` to directly update the model weight based on preference data.
-This streamlined process makes trainng more stable and efficient while achieving comparable or better results than traditional RLHF.
+* The core innovation of DPO lies in the direct optimization approach. 
+* Rather than training a separate reward model, DPO uses a` binary cross-entropy loss` to directly update the model weight based on preference data.
+* This streamlined process makes trainng more stable and efficient while achieving comparable or better results than traditional RLHF.
 
 ### DPO datasets
-Datasets for DPO are typically `created` by annotating `pair of preferred or non-preferred` response.
+* Datasets for DPO are typically `created` by annotating `pair of preferred or non-preferred` response.
 
 Below is example structure of single turn preference dataset for DPO
 | Prompt        | Chosen        | Rejected  |
@@ -72,17 +72,17 @@ trainer = DPOTrainer(
 trainer.train()
 ```
 ### Best Practices
-Data quality is crucial for successful DPO implementation. 
-Preference dataset should include diverse examples covering different aspects of desired behavior. 
-Clear annotation guidelines ensures consistent labelling of preferred and non preferred response.
-Model performance == quality of your preference dataset.
+* Data quality is crucial for successful DPO implementation. 
+* Preference dataset should include diverse examples covering different aspects of desired behavior. 
+* Clear annotation guidelines ensures consistent labelling of preferred and non preferred response.
+* Model performance == quality of your preference dataset.
 
-During training, monitor the loss convergence and validate performance on held-out data. 
-The beta parameters may need adjustments to balance preference learning with maintaining the model's general capabilities.
-Regular evaluation on diverse prompts helps ensure the model is learning the intended preferences without overfitting.
+* During training, monitor the loss convergence and validate performance on held-out data. 
+* The beta parameters may need adjustments to balance preference learning with maintaining the model's general capabilities.
+* Regular evaluation on diverse prompts helps ensure the model is learning the intended preferences without overfitting.
 
-Compare the model's outputs with the reference model to verify improvement in preference alignment.
-Testing on a variety of prompts, including edge cases, helps ensure robust preference learning across different scenarios.
+* Compare the model's outputs with the reference model to verify improvement in preference alignment.
+* Testing on a variety of prompts, including edge cases, helps ensure robust preference learning across different scenarios.
 
 
 example: https://huggingface.co/collections/argilla/preference-datasets-for-dpo-656f0ce6a00ad2dc33069478
